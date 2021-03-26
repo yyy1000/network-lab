@@ -13,14 +13,14 @@ void DUMMY_CODE(Targs &&... /* unused */) {}
 using namespace std;
 
 ByteStream::ByteStream(const size_t capacity)
-    : storage(), buffer(), _capacity(capacity), _nowsize(0), _bytes_written(0), _bytes_read(0), _input_end(false) {}
+    : buffer(), _capacity(capacity), _nowsize(0), _bytes_written(0), _bytes_read(0), _input_end(false) {}
 
 size_t ByteStream::write(const string &data) {
     size_t res = 0;
     if (data.size() >= remaining_capacity()) {
         res = remaining_capacity();
         buffer += data.substr(0, remaining_capacity());
-        storage += data.substr(remaining_capacity());
+        //storage += data.substr(remaining_capacity());
         _nowsize = _capacity;
     } else {
         res = data.size();
@@ -58,16 +58,8 @@ void ByteStream::pop_output(const size_t len) {
 //! \param[in] len bytes will be popped and returned
 //! \returns a string
 std::string ByteStream::read(const size_t len) {
-    string res;
-    if (storage.size() <= len) {
-        res = storage;
-        buffer += res;
-        storage = "";
-    } else {
-        res = storage.substr(0, len);
-        buffer += res;
-        storage = storage.substr(len);
-    }
+    string res=peek_output(len);
+    pop_output(len);
     return res;
 }
 

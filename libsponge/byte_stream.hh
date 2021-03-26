@@ -11,7 +11,7 @@ using namespace std;
 class ByteStream {
   private:
     // Your code here -- add private members as necessary.
-    string storage;
+    //string storage;
     string buffer;
     size_t _capacity;
     size_t _nowsize;
